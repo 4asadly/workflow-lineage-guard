@@ -1,0 +1,27 @@
+name: Feature request
+description: Propose a workflow adapter, safety rule, or evidence improvement.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What failure mode or workflow gap should the project address?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and expected behavior
+      description: Explain what trusted input would justify the decision or repair.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Suggested scope
+      description: Describe the smallest safe implementation and relevant synthetic fixture.
+    validations:
+      required: true
