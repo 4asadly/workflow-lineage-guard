@@ -74,7 +74,7 @@ DataHub, DataHub MCP Server, OpenAI Agents SDK, Python, FastAPI, Uvicorn, JavaSc
 
 Fastest path:
 
-1. Open the [interactive browser demo](https://workflow-lineage-guard-demo.sweet-hake-1733.chatgpt.site).
+1. Open the [interactive browser demo](https://workflow-lineage-guard.onrender.com).
 2. Click **Run impact scan**. The bundled example renames `customer_email` to `email_address`,
    identifies the exact affected n8n JSON pointers, and produces reviewable patches plus a
    DataHub write-back preview.
@@ -90,7 +90,7 @@ Local path:
 ## Required links before submission
 
 - Public repository: https://github.com/4asadly/workflow-lineage-guard
-- Live demo: https://workflow-lineage-guard-demo.sweet-hake-1733.chatgpt.site
+- Live demo: https://workflow-lineage-guard.onrender.com
 - Public video under three minutes: `[ADD YOUTUBE OR VIMEO URL]`
 - Recording script: [`docs/DEMO_VIDEO_SCRIPT.md`](docs/DEMO_VIDEO_SCRIPT.md)
 
