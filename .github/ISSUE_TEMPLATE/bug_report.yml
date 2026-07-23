@@ -1,0 +1,49 @@
+name: Bug report
+description: Report reproducible incorrect behavior or unsafe analysis.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Never include API keys, DataHub tokens, private catalog output, or client workflow data.
+        Reduce the report to a synthetic example whenever possible.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and the behavior you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include synthetic schemas and workflow JSON, or link to a small public fixture.
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Runtime mode
+      options:
+        - Deterministic demo
+        - Live DataHub MCP
+        - DataHub preflight verifier
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.1.0 or commit SHA
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed credentials, private metadata, and client data.
+          required: true
