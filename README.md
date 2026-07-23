@@ -2,6 +2,9 @@
 
 **Predict what an upstream schema change will break, repair exact n8n references, and return the evidence to DataHub.**
 
+[**Try the interactive browser demo →**](https://workflow-lineage-guard-demo.sweet-hake-1733.chatgpt.site)  
+No credentials or installation required. The public demo runs the deterministic engine locally in your browser and does not claim live DataHub verification.
+
 Workflow Lineage Guard is a DataHub-powered agent built for the **Agents That Do Real Work** category. It combines DataHub's context graph with deterministic JSON analysis so a language model can explain and orchestrate a repair without inventing the repair itself.
 
 ## Verification status
@@ -17,7 +20,7 @@ produces the safe evidence file.
 | Offline web demo | Verified locally |
 | Real DataHub MCP reads | Implemented; tenant proof not yet bundled |
 | Approved DataHub write-back | Implemented behind two gates; not yet live-verified |
-| Public deployment | Not yet available |
+| Public browser demo | [Live and judge-accessible](https://workflow-lineage-guard-demo.sweet-hake-1733.chatgpt.site) |
 
 ## Why it matters
 
