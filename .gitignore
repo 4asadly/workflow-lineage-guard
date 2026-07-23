@@ -1,0 +1,12 @@
+.env
+.env.local
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+outputs/*.json
+!outputs/.gitkeep
+outputs/*.md
