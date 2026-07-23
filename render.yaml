@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: workflow-lineage-guard
+    runtime: python
+    plan: free
+    buildCommand: pip install .
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: OPENAI_API_KEY
+        value: replace_me
+      - key: DATAHUB_MODE
+        value: demo
+      - key: DATAHUB_ENABLE_WRITEBACK
+        value: "false"
