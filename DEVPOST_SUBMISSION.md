@@ -92,6 +92,7 @@ Local path:
 - Public repository: https://github.com/4asadly/workflow-lineage-guard
 - Live demo: https://workflow-lineage-guard-demo.sweet-hake-1733.chatgpt.site
 - Public video under three minutes: `[ADD YOUTUBE OR VIMEO URL]`
+- Recording script: [`docs/DEMO_VIDEO_SCRIPT.md`](docs/DEMO_VIDEO_SCRIPT.md)
 
 ## Submission checklist
 
