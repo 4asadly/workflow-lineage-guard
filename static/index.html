@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Predict and repair schema-change breakage in automation workflows with DataHub context." />
+    <title>Workflow Lineage Guard</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Workflow Lineage Guard home">
+        <span class="brand-mark">LG</span>
+        <span><strong>Lineage Guard</strong><small>DataHub impact intelligence</small></span>
+      </a>
+      <div id="modeBadge" class="mode-badge"><span></span>Checking runtime</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow">PREVENT THE BREAK BEFORE DEPLOYMENT</div>
+        <h1>Know what breaks.<br /><em>Repair it with evidence.</em></h1>
+        <p>Lineage Guard traces a schema change through DataHub, finds exact n8n workflow references, generates a reviewable patch, and prepares the finding for write-back.</p>
+        <div class="hero-metrics" aria-label="Product capabilities">
+          <div><strong>Column-level</strong><span>impact evidence</span></div>
+          <div><strong>JSON-safe</strong><span>workflow patches</span></div>
+          <div><strong>Read + write</strong><span>context graph</span></div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="workspace-header">
+          <div>
+            <span class="step">01</span>
+            <h2>Simulate a schema change</h2>
+          </div>
+          <button id="loadDemo" class="ghost-button" type="button">Reset demo</button>
+        </div>
+
+        <div class="input-grid">
+          <label class="field field-wide">
+            <span>Dataset URN</span>
+            <input id="datasetUrn" spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>Current schema <small>JSON</small></span>
+            <textarea id="currentSchema" rows="8" spellcheck="false"></textarea>
+          </label>
+          <label class="field">
+            <span>Proposed schema <small>JSON</small></span>
+            <textarea id="proposedSchema" rows="8" spellcheck="false"></textarea>
+          </label>
+          <label class="field">
+            <span>Approved rename map <small>JSON object</small></span>
+            <textarea id="renameMap" rows="5" spellcheck="false"></textarea>
+          </label>
+          <label class="field">
+            <span>Lineage path <small>JSON array</small></span>
+            <textarea id="lineagePath" rows="5" spellcheck="false"></textarea>
+          </label>
+          <label class="field field-wide">
+            <span>n8n workflow <small>JSON</small></span>
+            <textarea id="workflow" rows="12" spellcheck="false"></textarea>
+          </label>
+        </div>
+
+        <div class="run-row">
+          <label class="approval">
+            <input id="allowWriteback" type="checkbox" />
+            <span><strong>Approve DataHub write-back</strong><small>Live mode only. Preview is always generated.</small></span>
+          </label>
+          <button id="runScan" class="primary-button" type="button">
+            <span>Run impact scan</span><span aria-hidden="true">→</span>
+          </button>
+        </div>
+        <p id="formError" class="form-error" role="alert"></p>
+      </section>
+
+      <section id="results" class="results hidden" aria-live="polite">
+        <div class="workspace-header">
+          <div>
+            <span class="step">02</span>
+            <h2>Evidence-backed decision</h2>
+          </div>
+          <button id="downloadPatch" class="ghost-button" type="button">Download fixed workflow</button>
+        </div>
+
+        <div class="result-overview">
+          <div class="risk-gauge">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="gauge-track" cx="60" cy="60" r="50"></circle>
+              <circle id="gaugeValue" class="gauge-value" cx="60" cy="60" r="50"></circle>
+            </svg>
+            <div><strong id="riskScore">0</strong><span>risk / 100</span></div>
+          </div>
+          <div class="verdict-block">
+            <span id="verdict" class="verdict">SAFE</span>
+            <h3 id="resultSummary">No referenced breaking change was detected.</h3>
+            <p id="agentNarrative"></p>
+          </div>
+          <div class="evidence-stats">
+            <div><strong id="findingCount">0</strong><span>impacts</span></div>
+            <div><strong id="patchCount">0</strong><span>patches</span></div>
+            <div><strong id="lineageCount">0</strong><span>lineage hops</span></div>
+          </div>
+        </div>
+
+        <div class="result-grid">
+          <article class="panel">
+            <div class="panel-heading"><span>Impact evidence</span><small>Exact JSON pointers</small></div>
+            <div id="findings" class="findings"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><span>Generated patch</span><small>Before → after</small></div>
+            <div id="patches" class="patches"></div>
+          </article>
+          <article class="panel panel-wide">
+            <div class="panel-heading"><span>DataHub write-back preview</span><small id="writebackStatus">Preview only</small></div>
+            <pre id="writeback"></pre>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Built by Asad Abbas Sheikh</span>
+      <span>DataHub MCP · OpenAI Agents SDK · Apache-2.0</span>
+    </footer>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

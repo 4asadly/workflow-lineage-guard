@@ -1,0 +1,54 @@
+{
+  "name": "Customer Renewal Alerts",
+  "nodes": [
+    {
+      "name": "Fetch Renewals",
+      "type": "n8n-nodes-base.postgres",
+      "parameters": {
+        "query": "SELECT customer_id, customer_email, renewal_date, plan_value FROM customer_profile"
+      }
+    },
+    {
+      "name": "Prepare CRM Payload",
+      "type": "n8n-nodes-base.set",
+      "parameters": {
+        "values": {
+          "email": "={{ $json.customer_email }}",
+          "renewal": "={{ $json.renewal_date }}"
+        }
+      }
+    },
+    {
+      "name": "Send Reminder",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://crm.example.test/reminders",
+        "body": "={\"recipient\": \"{{$json.customer_email}}\", \"date\": \"{{$json.renewal_date}}\"}"
+      }
+    }
+  ],
+  "connections": {
+    "Fetch Renewals": {
+      "main": [
+        [
+          {
+            "node": "Prepare CRM Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare CRM Payload": {
+      "main": [
+        [
+          {
+            "node": "Send Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

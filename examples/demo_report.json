@@ -1,0 +1,126 @@
+{
+  "workflow_name": "Customer Renewal Alerts",
+  "dataset_urn": "urn:li:dataset:(urn:li:dataPlatform:snowflake,raw.customers,PROD)",
+  "verdict": "needs_review",
+  "risk_score": 51,
+  "summary": "Detected 1 impact(s); generated 2 safe patch(es).",
+  "schema_changes": [
+    {
+      "kind": "renamed",
+      "field": "customer_email",
+      "replacement": "email_address",
+      "old_type": "string",
+      "new_type": "string",
+      "confidence": 1.0
+    }
+  ],
+  "findings": [
+    {
+      "severity": "critical",
+      "title": "Referenced field renamed: customer_email",
+      "explanation": "2 exact workflow reference(s) must move to email_address.",
+      "field": "customer_email",
+      "replacement": "email_address",
+      "references": [
+        {
+          "field": "customer_email",
+          "json_pointer": "/nodes/1/parameters/values/email",
+          "node_name": "Prepare CRM Payload",
+          "value_preview": "={{ $json.customer_email }}"
+        },
+        {
+          "field": "customer_email",
+          "json_pointer": "/nodes/2/parameters/body",
+          "node_name": "Send Reminder",
+          "value_preview": "={\"recipient\": \"{{$json.customer_email}}\", \"date\": \"{{$json.renewal_date}}\"}"
+        }
+      ],
+      "auto_fixable": true
+    }
+  ],
+  "patches": [
+    {
+      "json_pointer": "/nodes/1/parameters/values/email",
+      "node_name": "Prepare CRM Payload",
+      "old_field": "customer_email",
+      "new_field": "email_address",
+      "before": "={{ $json.customer_email }}",
+      "after": "={{ $json.email_address }}"
+    },
+    {
+      "json_pointer": "/nodes/2/parameters/body",
+      "node_name": "Send Reminder",
+      "old_field": "customer_email",
+      "new_field": "email_address",
+      "before": "={\"recipient\": \"{{$json.customer_email}}\", \"date\": \"{{$json.renewal_date}}\"}",
+      "after": "={\"recipient\": \"{{$json.email_address}}\", \"date\": \"{{$json.renewal_date}}\"}"
+    }
+  ],
+  "fixed_workflow": {
+    "name": "Customer Renewal Alerts",
+    "nodes": [
+      {
+        "name": "Fetch Renewals",
+        "type": "n8n-nodes-base.postgres",
+        "parameters": {
+          "query": "SELECT customer_id, customer_email, renewal_date, plan_value FROM customer_profile"
+        }
+      },
+      {
+        "name": "Prepare CRM Payload",
+        "type": "n8n-nodes-base.set",
+        "parameters": {
+          "values": {
+            "email": "={{ $json.email_address }}",
+            "renewal": "={{ $json.renewal_date }}"
+          }
+        }
+      },
+      {
+        "name": "Send Reminder",
+        "type": "n8n-nodes-base.httpRequest",
+        "parameters": {
+          "url": "https://crm.example.test/reminders",
+          "body": "={\"recipient\": \"{{$json.email_address}}\", \"date\": \"{{$json.renewal_date}}\"}"
+        }
+      }
+    ],
+    "connections": {
+      "Fetch Renewals": {
+        "main": [
+          [
+            {
+              "node": "Prepare CRM Payload",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare CRM Payload": {
+        "main": [
+          [
+            {
+              "node": "Send Reminder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "writeback_markdown": "## Workflow Lineage Guard\n\n**Workflow:** `Customer Renewal Alerts`  \n**Dataset:** `urn:li:dataset:(urn:li:dataPlatform:snowflake,raw.customers,PROD)`  \n**Verdict:** **NEEDS REVIEW** (risk 51/100)\n\n### Impact evidence\n- **customer_email** \u2014 2 exact workflow reference(s) must move to email_address. Nodes: Prepare CRM Payload, Send Reminder.\n\n### Automated action\n- `Prepare CRM Payload`: `customer_email` \u2192 `email_address`\n- `Send Reminder`: `customer_email` \u2192 `email_address`\n\n> Generated from schema evidence and exact workflow JSON references. Review before deployment.",
+  "provenance": {
+    "source": "request payload",
+    "datahub_verified": false,
+    "datahub_tool_calls": [],
+    "lineage_path": [
+      "snowflake.raw.customers",
+      "dbt.analytics.customer_profile",
+      "n8n.Customer Renewal Alerts"
+    ],
+    "workflow_sha256": "a2113cc1e9f130f2067d890e7f3b0f1bab2b0198e4c17a1afac75df5702a02d9",
+    "method": "deterministic schema diff + exact JSON reference scan"
+  }
+}
