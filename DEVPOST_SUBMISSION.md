@@ -72,26 +72,34 @@ DataHub, DataHub MCP Server, OpenAI Agents SDK, Python, FastAPI, Uvicorn, JavaSc
 
 ## Testing instructions
 
+Fastest path:
+
+1. Open the [interactive browser demo](https://workflow-lineage-guard-demo.sweet-hake-1733.chatgpt.site).
+2. Click **Run impact scan**. The bundled example renames `customer_email` to `email_address`,
+   identifies the exact affected n8n JSON pointers, and produces reviewable patches plus a
+   DataHub write-back preview.
+
+Local path:
+
 1. Clone the public repository.
 2. Install dependencies with `uv sync --extra dev`.
 3. Copy `.env.example` to `.env.local`; credentials are optional for the demo.
 4. Run `uv run python main.py --demo --output examples/demo_report.json`.
 5. Run `uv run python main.py --serve` and open `http://localhost:8000`.
-6. Click **Run impact scan**. The bundled example renames `customer_email` to `email_address`, identifies two affected n8n nodes, and produces a fixed JSON download plus DataHub write-back preview.
 
 ## Required links before submission
 
-- Public repository: `[ADD GITHUB URL]`
-- Live demo: `[ADD DEPLOYED APP URL]`
+- Public repository: https://github.com/4asadly/workflow-lineage-guard
+- Live demo: https://workflow-lineage-guard-demo.sweet-hake-1733.chatgpt.site
 - Public video under three minutes: `[ADD YOUTUBE OR VIMEO URL]`
 
 ## Submission checklist
 
 - [ ] Join the hackathon while logged into Devpost.
 - [ ] Capture credential-safe proof from a real DataHub tenant.
-- [ ] Add public repository and make Apache-2.0 visible in the repository About section.
-- [ ] Deploy a free judge-accessible demo.
+- [x] Add public repository and make Apache-2.0 visible in the repository About section.
+- [x] Deploy a free judge-accessible demo.
 - [ ] Record and upload a public demo video under three minutes.
-- [ ] Include `examples/` outputs in the repository.
+- [x] Include `examples/` outputs in the repository.
 - [ ] Complete the feedback-prize form.
 - [ ] Submit before August 10, 2026 at 5:00 PM EDT (August 11 at 2:00 AM PKT); internal target: August 9.
